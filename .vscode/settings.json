@@ -1,0 +1,8 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./rust_lambda/Cargo.toml"
+    ],
+    "shellcheck.ignorePatterns": {
+        ".env.example":true
+    },
+}
