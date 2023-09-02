@@ -1,4 +1,5 @@
 # Learn to define API Gateway and Lambda using Rust
+[![Rust CI](https://github.com/yoshitaka-motomura/learn-aws-rust/actions/workflows/rust_ci.yml/badge.svg?event=workflow_run)](https://github.com/yoshitaka-motomura/learn-aws-rust/actions/workflows/rust_ci.yml)
 
 ## Description
 
