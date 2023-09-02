@@ -30,8 +30,35 @@ cargo lambda build
 
 ## How to deploy
 
+see [cdk/README.md](cdk/README.md)
 ```bash
 cd cdk
 // cdk bootstrap // Run it when deploying for the first time
 cdk deploy
+```
+
+## Directory structure
+
+```bash
+.
+├── README.md
+├── cdk // CDK
+│   ├── README.md
+│   ├── bin // CDK entry point
+│   ├── cdk.json
+│   ├── cdk.out
+│   ├── jest.config.js
+│   ├── lib // CDK code
+│   ├── node_modules
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── test
+│   └── tsconfig.json
+└── rust_lambda // Rust Module
+    ├── Cargo.lock
+    ├── Cargo.toml
+    ├── README.md
+    └── src
+        ├── main.rs // Lambda code
+        └── tests.rs // Unit test code
 ```
