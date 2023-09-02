@@ -42,7 +42,6 @@ jobs:
       run: cargo test --verbose
 
     - name: Send notification to Discord
-      if: always()
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
