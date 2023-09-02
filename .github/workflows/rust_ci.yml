@@ -47,4 +47,4 @@ jobs:
       with:
         webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
         webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
-        message: "Build was ${{ job.status }}!"
+        message: "Build was Rust CI"
