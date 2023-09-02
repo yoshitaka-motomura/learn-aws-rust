@@ -1,15 +1,18 @@
 //! # cargo-lambda example 
-
 use lambda_http::{run, service_fn, Body, Error, Request, RequestExt, Response};
 use serde::Serialize; 
 extern crate chrono;
+extern crate maxminddb;
 use chrono::Local;
-
+use maxminddb::geoip2;
+#[allow(unused_imports)]
+use std::net::IpAddr;
 #[derive(Serialize)]
-struct JsonResponse {
+struct JsonResponse <'a> {
     message: String,
     time: String,
     ip: String,
+    geoip: geoip2::City<'a>,
 }
 
 /// This is the main body for the function.
@@ -28,19 +31,59 @@ async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
         },
         _ => "unknown".to_string(),
     };
+    
+    // If you want to try GeoIp, please visit the `maxmind` website and get a free database of GeoLite2.
+    // visit: https://dev.maxmind.com/geoip/geoip2/geolite2/
+    // ↓Please uncomment the code below.
+
+    //let ip_obj: IpAddr = ip.to_string().parse().unwrap();
+    //let data: &[u8] = include_bytes!("./GeoLite2-City.mmdb");
+    //let render = maxminddb::Reader::from_source(data).unwrap();
+    // let city = match render.lookup::<geoip2::City>(ip_obj) {
+    //     Ok(city) => city,
+    //     Err(_) => {
+    //         geoip2::City {
+    //             continent: None,
+    //             country: None,
+    //             city: None,
+    //             location: None,
+    //             postal: None,
+    //             registered_country: None,
+    //             represented_country: None,
+    //             subdivisions: None,
+    //             traits: None,
+    //         }
+    //     },
+    // };
+        
+
+    // If you have prepared a Geoip database, this section is not necessary.
+    let city = geoip2::City { 
+        city: None, 
+        continent: None,
+         country: None, 
+         location: None,
+         postal: None, 
+         registered_country: None,
+         represented_country: None,
+         subdivisions: None, 
+         traits: None,
+    };
+
 
     let now = Local::now();
     let response = JsonResponse {
         message: format!("Hello, {}", who),
         time: now.format("%Y-%m-%d %H:%M:%S").to_string(),
         ip: ip.to_string(),
+        geoip: city,
     };
 
     let body = serde_json::to_string(&response)?; // JSONに変換
 
     let resp = Response::builder()
         .status(200)
-        .header("content-type", "application/json")
+        .header("content-type", "application/json; charset=utf-8")
         .body(body.into())
         .map_err(Box::new)?;
 
