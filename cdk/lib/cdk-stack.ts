@@ -23,6 +23,7 @@ export class CdkStack extends cdk.Stack {
       timeout: cdk.Duration.seconds(10),
       environment: {
         RUST_BACKTRACE: '1',
+        TZ: 'Asia/Tokyo',
       },
     });
 
