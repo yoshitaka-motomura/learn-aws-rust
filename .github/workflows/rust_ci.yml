@@ -10,7 +10,7 @@ env:
 
 defaults:
   run:
-    working-directory: ./rust_lambda
+    working-directory: ./rust_lambda/hello
 
 jobs:
   CI:
