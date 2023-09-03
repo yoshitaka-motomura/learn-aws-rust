@@ -3,6 +3,14 @@ name = "rust_lambda"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "hello_lambda"
+path = "src/hello_lambda/main.rs"
+
+# [[bin]]
+# name = "lambda_function2"
+# path = "src/lambda_function2/main.rs"
+
 # Starting in Rust 1.62 you can use `cargo add` to add dependencies 
 # to your project.
 #
@@ -25,5 +33,6 @@ serde="1.0.130"
 serde_json="1.0.68"
 serde_derive="1.0.130"
 maxminddb = "0.23.0"
+
 
 
