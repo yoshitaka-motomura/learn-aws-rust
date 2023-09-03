@@ -1,15 +1,8 @@
 [package]
-name = "rust_lambda"
+name = "rust_lambda_hello"
 version = "0.1.0"
 edition = "2021"
-
-[[bin]]
-name = "hello_lambda"
-path = "src/hello_lambda/main.rs"
-
-# [[bin]]
-# name = "lambda_function2"
-# path = "src/lambda_function2/main.rs"
+#default-run = "lambda_scraper"
 
 # Starting in Rust 1.62 you can use `cargo add` to add dependencies 
 # to your project.
@@ -26,13 +19,16 @@ path = "src/hello_lambda/main.rs"
 chrono = "0.4.28"
 lambda_http = "0.8.1"
 lambda_runtime = "0.8.1"
-tokio = { version = "1", features = ["macros"] }
+tokio = { version = "1", features = ["full"] }
 tracing = { version = "0.1", features = ["log"] }
 tracing-subscriber = { version = "0.3", default-features = false, features = ["fmt"] }
 serde="1.0.130"
 serde_json="1.0.68"
 serde_derive="1.0.130"
 maxminddb = "0.23.0"
+url = "2.4.1"
+reqwest = "0.11.20"
+select = "0.6.0"
 
 
 

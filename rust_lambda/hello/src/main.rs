@@ -36,39 +36,39 @@ async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
     // visit: https://dev.maxmind.com/geoip/geoip2/geolite2/
     // ↓Please uncomment the code below.
 
-    //let ip_obj: IpAddr = ip.to_string().parse().unwrap();
-    //let data: &[u8] = include_bytes!("./GeoLite2-City.mmdb");
-    //let render = maxminddb::Reader::from_source(data).unwrap();
-    // let city = match render.lookup::<geoip2::City>(ip_obj) {
-    //     Ok(city) => city,
-    //     Err(_) => {
-    //         geoip2::City {
-    //             continent: None,
-    //             country: None,
-    //             city: None,
-    //             location: None,
-    //             postal: None,
-    //             registered_country: None,
-    //             represented_country: None,
-    //             subdivisions: None,
-    //             traits: None,
-    //         }
-    //     },
-    // };
+    let ip_obj: IpAddr = ip.to_string().parse().unwrap();
+    let data: &[u8] = include_bytes!("./GeoLite2-City.mmdb");
+    let render = maxminddb::Reader::from_source(data).unwrap();
+    let city = match render.lookup::<geoip2::City>(ip_obj) {
+        Ok(city) => city,
+        Err(_) => {
+            geoip2::City {
+                continent: None,
+                country: None,
+                city: None,
+                location: None,
+                postal: None,
+                registered_country: None,
+                represented_country: None,
+                subdivisions: None,
+                traits: None,
+            }
+        },
+    };
         
 
     // If you have prepared a Geoip database, this section is not necessary.
-    let city = geoip2::City { 
-        city: None, 
-        continent: None,
-         country: None, 
-         location: None,
-         postal: None, 
-         registered_country: None,
-         represented_country: None,
-         subdivisions: None, 
-         traits: None,
-    };
+    // let city = geoip2::City { 
+    //     city: None, 
+    //     continent: None,
+    //      country: None, 
+    //      location: None,
+    //      postal: None, 
+    //      registered_country: None,
+    //      represented_country: None,
+    //      subdivisions: None, 
+    //      traits: None,
+    // };
 
 
     let now = Local::now();
