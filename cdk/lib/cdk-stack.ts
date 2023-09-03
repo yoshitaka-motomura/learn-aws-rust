@@ -16,7 +16,7 @@ export class CdkStack extends cdk.Stack {
 
     // Lambda function
     const helloLambda = new lambda.Function(this, 'RustHelloLambda', {
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../rust_lambda/target/lambda/rust_lambda')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../rust_lambda/target/lambda/hello_lambda')),
       handler: 'not.used.in.rust',
       runtime: lambda.Runtime.PROVIDED_AL2,
       memorySize: 512,
