@@ -10,7 +10,7 @@ env:
 
 defaults:
   run:
-    working-directory: ./rust_lambda/hello
+    working-directory: ./rust_lambda/scraper
 
 jobs:
   CI:
