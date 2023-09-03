@@ -21,12 +21,15 @@ pub async fn fetch(url: String)-> Result<Meta, bool> {
         }
     };
 
+    println!("{:?}", res);
+
     let html = match res.text().await {
         Ok(text) => text,
         Err(_) => {
             return Err(false);
         }
     };
+
 
     Ok(html_parse(html))
 }
@@ -69,3 +72,58 @@ fn html_parse(html: String) -> Meta {
     return meta;
 
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_html_parse() {
+        let html = r#"
+        <html>
+            <head>
+                <title>test</title>
+                <meta name="description" content="test description">
+                <meta property="og:image" content="test image">
+            </head>
+            <body>
+            </body>
+        </html>
+        "#;
+        let meta = html_parse(html.to_string());
+        assert_eq!(meta.name, "test");
+        assert_eq!(meta.description, "test description");
+        assert_eq!(meta.image, "test image");
+    }
+    
+    #[tokio::test]
+    async fn test_fetch() {
+        let mock_html = r#"
+        <html>
+            <head>
+                <title>test</title>
+                <meta name="description" content="test description">
+                <meta property="og:image" content="test image">
+            </head>
+            <body>
+            </body>
+        </html>
+        "#;
+    
+        let mut server = mockito::Server::new();
+        server.mock("GET", "/")
+            .with_status(200)
+            .with_header("content-type", "text/html")
+            .with_body(mock_html)
+            .create();
+        let result = super::fetch(server.url().to_string()).await;
+
+        result.map(|meta| {
+            assert_eq!(meta.name, "test");
+            assert_eq!(meta.description, "test description");
+            assert_eq!(meta.image, "test image");
+        }).unwrap_or_else(|_| {
+            panic!("not come to this scope");
+        });
+    }
+}
+
