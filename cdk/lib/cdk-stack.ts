@@ -16,7 +16,20 @@ export class CdkStack extends cdk.Stack {
 
     // Lambda function
     const helloLambda = new lambda.Function(this, 'RustHelloLambda', {
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../rust_lambda/target/lambda/hello_lambda')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../rust_lambda/hello/target/lambda/rust_lambda_hello')),
+      handler: 'not.used.in.rust',
+      runtime: lambda.Runtime.PROVIDED_AL2,
+      memorySize: 512,
+      timeout: cdk.Duration.seconds(10),
+      environment: {
+        RUST_BACKTRACE: '1',
+        TZ: 'Asia/Tokyo',
+      },
+    });
+
+    // scraping Lambda
+    const scrapingLambda = new lambda.Function(this, 'RustScrapingLambda', {
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../rust_lambda/scraper/target/lambda/rust_lambda_scraper')),
       handler: 'not.used.in.rust',
       runtime: lambda.Runtime.PROVIDED_AL2,
       memorySize: 512,
@@ -38,7 +51,14 @@ export class CdkStack extends cdk.Stack {
         'rust-hello-lambda',
         helloLambda,
       )
+    });
 
+    httpApi.addRoutes({
+      path: '/scraping',
+      methods: [HttpMethod.GET],
+      integration: new HttpLambdaIntegration(
+        'rust-scraping-lambda',
+        scrapingLambda)
     });
 
     new cdk.CfnOutput(this, "HttpApiUrl", {
