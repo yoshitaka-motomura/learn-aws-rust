@@ -89,3 +89,21 @@ cdk deploy
             └── main.rs
 
 ```
+## learned
+- [x] How to define API Gateway and Lambda using Rust
+- [x] How to deploy using CDK
+- [x] How to use Cargo-lambda
+
+### Note
+:warning: When using reqwest crate with cargo-lambda, the dependent environment `openssl-sys` causes an error (on Apple M1?)
+Let's specify the clay as follows.
+
+```toml
+[dependencies]
+reqwest = { version="0.11.20", default-features = false, features = ["json", "rustls-tls"]}
+
+```
+
+## Author
+
+[@yoshitaka_motomura](https://twitter.com/yoshi_motomura)
