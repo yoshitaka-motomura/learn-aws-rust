@@ -30,7 +30,25 @@ cargo lambda build
 
 ## How to deploy
 
+Describe how to deploy to AWS.  
+
+1. **If you have updated the Lambda function, you must first build it.**
+```bash
+cd rust_lambda
+cargo lambda build
+```
+2. **Run deploy with CDK commands**
+```bash
+cd cdk
+cdk deploy
+```
 see [cdk/README.md](cdk/README.md)
+
+If you are detail about  aws cdk and Cargo-lambda for visit Documents here
+
+- [aws cdk](https://docs.aws.amazon.com/cdk/latest/guide/home.html)
+- [Cargo-lambda](https://www.cargo-lambda.info/guide/getting-started.html)
+
 ```bash
 cd cdk
 // cdk bootstrap // Run it when deploying for the first time
@@ -42,23 +60,32 @@ cdk deploy
 ```bash
 .
 ├── README.md
-├── cdk // CDK
+├── cdk
 │   ├── README.md
-│   ├── bin // CDK entry point
+│   ├── bin
+│   │   ├── cdk.d.ts
+│   │   ├── cdk.js
+│   │   └── cdk.ts // cdk main
 │   ├── cdk.json
-│   ├── cdk.out
 │   ├── jest.config.js
-│   ├── lib // CDK code
-│   ├── node_modules
+│   ├── lib
+│   │   ├── cdk-stack.d.ts
+│   │   ├── cdk-stack.js
+│   │   └── cdk-stack.ts // stack 
 │   ├── package-lock.json
 │   ├── package.json
 │   ├── test
+│   │   ├── cdk.test.d.ts
+│   │   ├── cdk.test.js
+│   │   └── cdk.test.ts
 │   └── tsconfig.json
-└── rust_lambda // Rust Module
+└── rust_lambda
     ├── Cargo.lock
     ├── Cargo.toml
     ├── README.md
     └── src
-        ├── main.rs // Lambda code
-        └── tests.rs // Unit test code
+        └── hello_lambda // lambda function
+            ├── lib.rs
+            └── main.rs
+
 ```
